@@ -9,19 +9,26 @@ extern "C"
 {
 #endif
 
+#include <android/log.h>
 #include "silk.h"
 #include "lame.h"
 
-JNICALL jint xx(JNIEnv *env, jclass clazz, jstring src, jstring dest) {
+JNIEXPORT jint JNICALL
+Java_com_kgo_silk_JNI_convert(JNIEnv *env, jclass clazz, jstring src, jstring dest, jstring tmpfile) {
     const char *str_c = env->GetStringUTFChars(src, 0);
     const char *dest_c = env->GetStringUTFChars(dest, 0);
 
-    const char *tmp = "/data/data/com.ketian.android.silkv3/t.t";
+    const char *tmp = env->GetStringUTFChars(tmpfile, 0);
 
-    if (x(str_c, tmp) == 0) {
+    __android_log_print(ANDROID_LOG_DEBUG, "tian.ke",
+                        "libsilkx is developed by tian.ke, any question, please email to ketn4391@gmail.com");
+
+    __android_log_print(ANDROID_LOG_DEBUG, "tian.ke", "convert %s to %s", str_c, dest_c);
+    __android_log_print(ANDROID_LOG_DEBUG, "tian.ke", "tmpfile = %s", tmp);
+
+    if (convertSilk2PCM(str_c, tmp) == 0) {
         lame_t lame = lame_init();
         lame_set_in_samplerate(lame, 24000);
-
 
         lame_set_num_channels(lame, 1);
         lame_set_mode(lame, MONO);
@@ -55,32 +62,6 @@ JNICALL jint xx(JNIEnv *env, jclass clazz, jstring src, jstring dest) {
     }
 
     return -1;
-}
-
-JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
-    JNIEnv* env;
-    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
-        return -1;
-    }
-
-    JNINativeMethod gMethod[] = {
-            {"x", "(Ljava/lang/String;Ljava/lang/String;)I", (void *) xx},
-    };
-
-    jclass clazz = env->FindClass("com/ketian/android/silkv3/jni/JNI");
-    if (clazz == NULL) {
-        return JNI_ERR;
-    }
-
-    if (env->RegisterNatives(clazz, gMethod, 1) < 0) {
-        return false;
-    }
-
-    return JNI_VERSION_1_6;
-}
-
-JNIEXPORT void JNICALL JNI_OnUnload(JavaVM* vm, void* reserved) {
-    return;
 }
 
 #ifdef __cplusplus

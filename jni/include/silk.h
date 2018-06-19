@@ -5,6 +5,6 @@
 #ifndef JNI_SILK_H
 #define JNI_SILK_H
 
-int x(const char *src, const char * desk);
+int convertSilk2PCM(const char *src, const char * desk);
 
 #endif //JNI_SILK_H

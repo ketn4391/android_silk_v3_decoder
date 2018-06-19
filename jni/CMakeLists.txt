@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.4)
 project(com.ketian.android.silkv3.jni)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-include_directories("/home/ketian/tools/android-ndk-r10e/platforms/android-21/arch-arm/usr/include")
+include_directories("/Users/tian.ke/Library/Android/sdk/android-ndk-r16b/sysroot/usr/include")
 include_directories("include")
 include_directories("libmp3lame")
 

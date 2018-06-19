@@ -33,7 +33,7 @@ include $(BUILD_STATIC_LIBRARY)
 #
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := libx
+LOCAL_MODULE := libsilkx
 LOCAL_SRC_FILES := SKP_Silk_dec_API.c \
     SKP_Silk_create_init_destroy.c \
     SKP_Silk_decoder_set_fs.c \

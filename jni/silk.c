@@ -73,7 +73,7 @@ unsigned long GetHighResolutionTime() /* O: time in usec*/
 /* Seed for the random number generator, which is used for simulating packet loss */
 static SKP_int32 rand_seed = 1;
 
-int x(const char *src, const char * dest) {
+int convertSilk2PCM(const char *src, const char * dest) {
     unsigned long tottime, starttime;
     double    filetime;
     size_t    counter;
