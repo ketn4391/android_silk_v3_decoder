@@ -73,7 +73,7 @@ unsigned long GetHighResolutionTime() /* O: time in usec*/
 /* Seed for the random number generator, which is used for simulating packet loss */
 static SKP_int32 rand_seed = 1;
 
-int convertSilk2PCM(const char *src, const char * dest) {
+int convertSilk2PCM(const char* src, const FILE* destFile) {
     unsigned long tottime, starttime;
     double    filetime;
     size_t    counter;
@@ -86,7 +86,7 @@ int convertSilk2PCM(const char *src, const char * dest) {
     SKP_int16 nBytesFEC;
     SKP_int16 nBytesPerPacket[ MAX_LBRR_DELAY + 1 ], totBytes;
     SKP_int16 out[ ( ( FRAME_LENGTH_MS * MAX_API_FS_KHZ ) << 1 ) * MAX_INPUT_FRAMES ], *outPtr;
-    char      speechOutFileName[ 150 ], bitInFileName[ 150 ];
+    char      bitInFileName[ 150 ];
     FILE      *bitInFile, *speechOutFile;
     SKP_int32 packetSize_ms=0, API_Fs_Hz = 0;
     SKP_int32 decSizeBytes;
@@ -96,13 +96,11 @@ int convertSilk2PCM(const char *src, const char * dest) {
     SKP_SILK_SDK_DecControlStruct DecControl;
 
     strcpy( bitInFileName, src );
-    strcpy( speechOutFileName, dest);
 
     if( !quiet ) {
         printf("********** Silk Decoder (Fixed Point) v %s ********************\n", SKP_Silk_SDK_get_version());
         printf("********** Compiled for %d bit cpu *******************************\n", (int)sizeof(void*) * 8 );
         printf( "Input:                       %s\n", bitInFileName );
-        printf( "Output:                      %s\n", speechOutFileName );
     }
 
     /* Open files */
@@ -131,9 +129,8 @@ int convertSilk2PCM(const char *src, const char * dest) {
         }
     }
 
-    speechOutFile = fopen( speechOutFileName, "wb" );
+    speechOutFile = destFile;
     if( speechOutFile == NULL ) {
-        printf( "Error: could not open output file %s\n", speechOutFileName );
         exit( 0 );
     }
 
@@ -384,7 +381,6 @@ int convertSilk2PCM(const char *src, const char * dest) {
     free( psDec );
 
     /* Close files */
-    fclose( speechOutFile );
     fclose( bitInFile );
 
     filetime = totPackets * 1e-3 * packetSize_ms;

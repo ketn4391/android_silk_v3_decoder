@@ -5,6 +5,12 @@
 #ifndef JNI_SILK_H
 #define JNI_SILK_H
 
-int convertSilk2PCM(const char *src, const char * desk);
+#include <android/log.h>
+#include <stdio.h>
+
+int convertSilk2PCM(const char *src, const FILE *dest);
+
+#define LOG_TAG "tian.ke"
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 
 #endif //JNI_SILK_H
