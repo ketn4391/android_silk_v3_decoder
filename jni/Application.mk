@@ -1,3 +1,3 @@
 APP_ABI := armeabi-v7a x86
-APP_PLATFORM := android-27
+APP_PLATFORM := android-14
 APP_CFLAGS += -DSTDC_HEADERS
