@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidSilkV3</string>
+    <string name="fuck_google">Tips:模拟器报android.view.View$OnUnhandledKeyEventListener不用管它,页面没问题的</string>
 </resources>
